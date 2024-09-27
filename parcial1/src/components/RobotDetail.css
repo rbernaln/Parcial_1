@@ -1,0 +1,46 @@
+
+.robot-detail {
+  border: 1px solid #ddd;
+  padding: 30px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+
+.robot-name {
+  font-size: 1.6rem;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+
+.robot-image {
+  width: 200px;
+  height: auto;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #fff;
+}
+
+
+.robot-info {
+  list-style-type: "\2192"; 
+  padding-left: 20px; 
+  text-align: left;
+}
+
+
+.robot-info li {
+  margin-bottom: 10px;
+  font-size: 1rem;
+  padding-left: 10px; 
+}
+
+.robot-info strong {
+  color: #333;
+}
