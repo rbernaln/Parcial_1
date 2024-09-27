@@ -1,13 +1,17 @@
+// src/pages/RobotsList.js
 import React, { useState, useEffect } from "react";
-import api from "../api"; 
-import RobotDetail from "../components/RobotDetail"; 
+import { useTranslation } from "react-i18next";
+import api from "../api";
+import RobotDetail from "../components/RobotDetail";
 import "./RobotsList.css";
+import LanguageSelector from "../components/LanguageSelector"; // Importamos el selector de idioma
 
 const RobotsList = () => {
+  const { t } = useTranslation();
   const [robots, setRobots] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [selectedRobot, setSelectedRobot] = useState(null); 
+  const [selectedRobot, setSelectedRobot] = useState(null);
 
   useEffect(() => {
     const fetchRobots = async () => {
@@ -16,21 +20,20 @@ const RobotsList = () => {
         setRobots(response.data);
         setLoading(false);
       } catch (err) {
-        console.error("Error al obtener los robots", err);
-        setError("Error al cargar los robots. Inténtalo más tarde.");
+        setError(t('fetch_error'));
         setLoading(false);
       }
     };
 
     fetchRobots();
-  }, []);
+  }, [t]);
 
   const handleRobotSelect = (robot) => {
     setSelectedRobot(robot);
   };
 
   if (loading) {
-    return <p>Cargando robots...</p>;
+    return <p>{t('loading')}</p>;
   }
 
   if (error) {
@@ -39,7 +42,8 @@ const RobotsList = () => {
 
   return (
     <div className="robots-container">
-      <h2 className="text-center">Adopta un Robot con Robot Lovers!</h2>
+      <LanguageSelector /> {/* Añadimos el selector de idioma */}
+      <h2 className="text-center">{t('robot_adopt_title')}</h2>
       <header className="robots-header">
         <img
           src="https://img.freepik.com/vector-gratis/conjunto-lindos-robots-vintage_331172-1430.jpg?size=626&ext=jpg"
@@ -49,15 +53,14 @@ const RobotsList = () => {
       </header>
 
       <div className="robots-content">
-        {/* Tabla de robots */}
         <div className="robots-table-container">
           <table className="table table-bordered mt-3">
             <thead className="table-dark">
               <tr>
-                <th>ID</th>
-                <th>Nombre</th>
-                <th>Modelo</th>
-                <th>Empresa Fabricante</th>
+                <th>{t('robot_table_headers.id')}</th>
+                <th>{t('robot_table_headers.name')}</th>
+                <th>{t('robot_table_headers.model')}</th>
+                <th>{t('robot_table_headers.manufacturer')}</th>
               </tr>
             </thead>
             <tbody>
@@ -73,14 +76,13 @@ const RobotsList = () => {
           </table>
         </div>
 
-        {/* Componente de detalles del robot */}
         <div className="robot-detail-container">
           <RobotDetail robot={selectedRobot} />
         </div>
       </div>
 
       <footer className="robots-footer text-center">
-        <p>Contact us: +57 3102105253 - info@robot-lovers.com - @robot-lovers</p>
+        <p>{t('footer_contact')} +57 3102105253 - info@robot-lovers.com - @robot-lovers</p>
       </footer>
     </div>
   );

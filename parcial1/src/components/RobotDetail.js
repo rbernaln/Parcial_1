@@ -1,9 +1,13 @@
+// src/components/RobotDetail.js
 import React from "react";
-import "./RobotDetail.css"; 
+import { useTranslation } from "react-i18next"; 
+import "./RobotDetail.css";
 
 const RobotDetail = ({ robot }) => {
+  const { t } = useTranslation();  
+
   if (!robot) {
-    return <p>Selecciona un robot para ver los detalles.</p>;
+    return <p>{t('select_robot')}</p>;  
   }
 
   return (
@@ -15,9 +19,15 @@ const RobotDetail = ({ robot }) => {
         className="robot-image"
       />
       <ul className="robot-info">
-        <li><strong>Año de Fabricación:</strong> {robot.añoFabricacion}</li>
-        <li><strong>Capacidad de Procesamiento:</strong> {robot.capacidadProcesamiento}</li>
-        <li><strong>Humor:</strong> {robot.humor}</li>
+        <li>
+          <strong>{t('year_of_manufacture')}:</strong> {robot.añoFabricacion}
+        </li> {/* Traducción para "Año de fabricación" */}
+        <li>
+          <strong>{t('processing_capacity')}:</strong> {robot.capacidadProcesamiento}
+        </li> {/* Traducción para "Capacidad de procesamiento" */}
+        <li>
+          <strong>{t('additional_features')}:</strong> {robot.humor}
+        </li> {/* Traducción para "Características adicionales" */}
       </ul>
     </div>
   );

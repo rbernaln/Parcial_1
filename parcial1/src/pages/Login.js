@@ -1,9 +1,13 @@
+// src/pages/Login.js
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import api from "../api";
 import "./Login.css";
+import LanguageSelector from "../components/LanguageSelector"; 
 
 const Login = () => {
+  const { t } = useTranslation();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(false);
@@ -22,7 +26,7 @@ const Login = () => {
         navigate("/robots");
       }
     } catch (err) {
-      if (err.response.status === 401) {
+      if (err.response && err.response.status === 401) {
         setError(true);
       } else {
         console.error("Error al conectar con el backend", err);
@@ -32,7 +36,8 @@ const Login = () => {
 
   return (
     <div className="login-container">
-        <h2 className="text-center">Adopta un Robot con Robot Lovers!</h2>
+      <LanguageSelector /> 
+      <h2 className="text-center">{t('robot_adopt_title')}</h2>
       <header className="login-header">
         <img
           src="https://img.freepik.com/vector-gratis/conjunto-lindos-robots-vintage_331172-1430.jpg?size=626&ext=jpg"
@@ -42,10 +47,10 @@ const Login = () => {
       </header>
 
       <div className="login-form-container">
-        <h2 className="text-center">Inicio de sesión</h2>
+        <h2 className="text-center">{t('login_title')}</h2>
         <form onSubmit={handleLogin}>
           <div className="mb-3">
-            <label className="form-label">Nombre de usuario</label>
+            <label className="form-label">{t('username_label')}</label>
             <input
               type="text"
               className="form-control"
@@ -55,7 +60,7 @@ const Login = () => {
             />
           </div>
           <div className="mb-3">
-            <label className="form-label">Contraseña</label>
+            <label className="form-label">{t('password_label')}</label>
             <input
               type="password"
               className="form-control"
@@ -66,21 +71,29 @@ const Login = () => {
           </div>
           {error && (
             <p className="text-danger">
-              Credenciales incorrectas. Por favor, intente de nuevo.
+              {t('login_error')}
             </p>
           )}
           <div className="button-group">
             <button type="submit" className="btn btn-primary">
-              Ingresar
+              {t('login_button')}
             </button>
-            <button type="button" className="btn btn-danger ms-2">
-              Cancelar
+            <button
+              type="button"
+              className="btn btn-danger ms-2"
+              onClick={() => {
+                setUsername("");
+                setPassword("");
+                setError(false);
+              }}
+            >
+              {t('cancel_button')}
             </button>
           </div>
         </form>
 
         <footer className="login-footer text-center mt-4">
-          <p>Contact us: +57 3102105253 - info@robot-lovers.com - @robot-lovers</p>
+          <p>{t('footer_contact')} +57 3102105253 - info@robot-lovers.com - @robot-lovers</p>
         </footer>
       </div>
     </div>
